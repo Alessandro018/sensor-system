@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sensor;
+use Illuminate\Validation\Rule;
 
 class SensorController extends Controller
 {
@@ -23,7 +24,9 @@ class SensorController extends Controller
     {
         $request->validate([
             'nome' => 'required|min:2|max:30',
-            'tipo' => 'required'
+            'tipo' => ['required',
+                Rule::in(['temperatura', 'luminosidade', 'presença', 'magnético']),
+            ]
         ]);
         Sensor::create($request->all());
         return response()->json(['mensagem' => 'Sensor cadastrado com sucesso'], 201);
@@ -42,6 +45,12 @@ class SensorController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nome' => 'required|min:2|max:30',
+            'tipo' => ['required',
+                Rule::in(['temperatura', 'luminosidade', 'presença', 'magnético']),
+            ]
+        ]);
         $sensor = $this->sensor->find($id);
         if(!$sensor) 
         {
