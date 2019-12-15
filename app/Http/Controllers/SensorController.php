@@ -34,7 +34,7 @@ class SensorController extends Controller
     	$sensor = Sensor::find($id);
         if(!$sensor) 
         {
-            return response()->json(['error' => 'Sensor não encontrado'], 404);
+            return response()->json(['data' => ['error' => 'Sensor não encontrado']], 404);
         }
         $data = ['data' => $sensor];
 	    return response()->json($data);
@@ -45,11 +45,22 @@ class SensorController extends Controller
         $sensor = $this->sensor->find($id);
         if(!$sensor) 
         {
-            return response()->json(['error' => 'Sensor não encontrado'], 404);
+            return response()->json(['data' => ['error' => 'Sensor não encontrado']], 404);
         }
         $sensor->update($request->all());
 
         $return = ['data' => ['mensagem' => 'Produto atualizado com sucesso!']];
         return response()->json($return, 200);
+    }
+
+    public function destroy($id)
+    {
+        $sensor = $this->sensor->find($id);
+        if(!$sensor) 
+        {
+            return response()->json(['data' => ['error' => 'Sensor não encontrado']], 404);
+        }
+        $sensor->delete();
+        return response()->json(['data'=> ['mensagem' => 'Sensor excluído com sucesso']], 200);
     }
 }
