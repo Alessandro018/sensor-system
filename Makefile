@@ -14,3 +14,4 @@ db-conf:
 	sed -i 's/DB_USERNAME.*/DB_USERNAME=laravel/' .env
 	sed -i 's/DB_PASSWORD.*/DB_PASSWORD=laravel/' .env
 	php artisan migrate
+    php artisan serve
