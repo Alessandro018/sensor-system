@@ -22,12 +22,23 @@ class SensorCreateTest extends TestCase
     public function test_create_sensor() {
         $response = $this->post(url('/api/sensor'), ['nome'=> 'teste', 'tipo' => 'temperatura'])
         ->assertStatus(201)
-        ->assertJson(['mensagem' => 'Sensor cadastrado com sucesso']);
+        ->assertJson(['data' => ['mensagem' => 'Sensor cadastrado com sucesso']]);
+    }
+
+    public function test_edit_sensor() {
+        $sensor = factory(\App\Sensor::class)->create();
+        $sensor->nome = 'atualizado';
+        $sensor->tipo = 'presença';
+        $response = $this->put(url('/api/sensor', $sensor->id), ['nome' => $sensor->nome, 'tipo' => $sensor->tipo])
+        ->assertStatus(200)
+        ->assertJson(['data' => ['mensagem' => 'Sensor atualizado com sucesso']]);
+
     }
 
     public function test_delete_sensor() {
         $sensor = factory(\App\Sensor::class)->create();
         $response = $this->delete(url('/api/sensor', $sensor->id))
-        ->assertStatus(200);
+        ->assertStatus(200)
+        ->assertJson(['data' => ['mensagem' => 'Sensor excluído com sucesso']]);
     }
 }

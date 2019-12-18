@@ -29,7 +29,7 @@ class SensorController extends Controller
             ]
         ]);
         Sensor::create($request->all());
-        return response()->json(['mensagem' => 'Sensor cadastrado com sucesso'], 201);
+        return response()->json(['data' => ['mensagem' => 'Sensor cadastrado com sucesso']], 201);
     }
 
     public function show($id)
@@ -58,7 +58,7 @@ class SensorController extends Controller
         }
         $sensor->update($request->all());
 
-        $return = ['data' => ['mensagem' => 'Produto atualizado com sucesso!']];
+        $return = ['data' => ['mensagem' => 'Sensor atualizado com sucesso']];
         return response()->json($return, 200);
     }
 
