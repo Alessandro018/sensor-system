@@ -34,6 +34,12 @@ class SensorCreateTest extends TestCase
 
     }
 
+    public function test_sensor_does_not_exist() {
+        $response = $this->get(url('/api/sensor', 0))
+        ->assertStatus(404)
+        ->assertJson(['data' => ['error' => 'Sensor não encontrado']]);
+    }
+
     public function test_delete_sensor() {
         $sensor = factory(\App\Sensor::class)->create();
         $response = $this->delete(url('/api/sensor', $sensor->id))
